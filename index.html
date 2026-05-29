@@ -46,25 +46,25 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
 .btn-post{padding:9px 20px;border:none;background:#1a73e8;color:#fff;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;border-radius:4px;opacity:.5;pointer-events:none;transition:background .12s}
 .btn-post.ready{opacity:1;pointer-events:auto}
 .btn-post:active{background:#1557b0}
-.thankyou-high{display:none;padding:28px 20px}
-.thankyou-high.show{display:block}
-.g-box{border:1px solid #dadce0;border-radius:8px;padding:20px;text-align:center}
-.g-logo{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px}
-.g-logo svg{width:22px;height:22px}
-.g-logo span{font-size:18px;font-weight:500;color:#202124}
-.g-box p{font-size:14px;color:#5f6368;line-height:1.5;margin-bottom:16px}
-.g-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 16px;background:#1a73e8;color:#fff;border:none;border-radius:4px;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent}
-.g-btn:active{background:#1557b0}
-.g-btn svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
-.skip-link{display:block;text-align:center;margin-top:12px;font-size:13px;color:#1a73e8;cursor:pointer}
-.thankyou-low{display:none;padding:32px 24px;text-align:center}
-.thankyou-low.show{display:block}
-.ty-check{width:56px;height:56px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
-.ty-check svg{width:32px;height:32px;fill:#137333}
-.ty-title{font-size:18px;font-weight:500;color:#202124;margin-bottom:8px}
-.ty-sub{font-size:14px;color:#5f6368;line-height:1.5}
 
-/* missing config warning */
+/* HIGH STARS thank you — auto redirects */
+.ty-high{display:none;padding:40px 24px;text-align:center}
+.ty-high.show{display:block}
+.ty-check{width:60px;height:60px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.ty-check svg{width:34px;height:34px;fill:#137333}
+.ty-title{font-size:20px;font-weight:600;color:#202124;margin-bottom:8px}
+.ty-sub{font-size:14px;color:#5f6368;line-height:1.6;margin-bottom:20px}
+.countdown{font-size:13px;color:#1a73e8;font-weight:600;margin-bottom:16px}
+.g-now-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 16px;background:#1a73e8;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.g-now-btn svg{width:18px;height:18px;fill:#fff}
+
+/* LOW STARS thank you */
+.ty-low{display:none;padding:40px 24px;text-align:center}
+.ty-low.show{display:block}
+.ty-low .ty-check{background:#e6f4ea}
+.ty-low .ty-check svg{fill:#137333}
+
+/* warning */
 .cfg-warn{margin:24px 16px;background:#fce8e6;border:1px solid #f5c6c2;border-radius:8px;padding:16px}
 .cfg-warn h3{font-size:14px;font-weight:600;color:#b71c1c;margin-bottom:6px}
 .cfg-warn p{font-size:13px;color:#c62828;line-height:1.5}
@@ -111,49 +111,38 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
       <button class="btn-post" id="btn-post" onclick="submitReview()">Post</button>
     </div>
 
-    <div class="thankyou-high" id="ty-high">
-      <div class="g-box">
-        <div class="g-logo">
-          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
-          <span>Google</span>
-        </div>
-        <p>Thank you! We're glad you had a great experience. Would you share it on Google so others can find us?</p>
-        <a class="g-btn" href="#" onclick="goGoogle(event)">
-          <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
-          Post on Google Reviews
-        </a>
-        <span class="skip-link" onclick="skipGoogle()">No thanks, I'm done</span>
-      </div>
-    </div>
-
-    <div class="thankyou-low" id="ty-low">
+    <!-- 4-5 stars: auto-redirect thank you -->
+    <div class="ty-high" id="ty-high">
       <div class="ty-check">
         <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
       </div>
-      <div class="ty-title">Thank you for your feedback</div>
-      <div class="ty-sub">We appreciate you letting us know. We'll work on doing better.</div>
+      <div class="ty-title">Thank you! 🎉</div>
+      <div class="ty-sub">We're so glad you enjoyed your visit! Taking you to Google to share your experience...</div>
+      <div class="countdown" id="countdown">Opening Google in 2...</div>
+      <a class="g-now-btn" href="#" onclick="goGoogle(event)">
+        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        Open Google Now
+      </a>
+    </div>
+
+    <!-- 1-3 stars: private thank you -->
+    <div class="ty-low" id="ty-low">
+      <div class="ty-check">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+      </div>
+      <div class="ty-title">Thank you for letting us know</div>
+      <div class="ty-sub">We appreciate your honest feedback. The owner will look into this and make it right.</div>
     </div>
   </div>
 
 </div>
 <script>
-/* ═══════════════════════════════════════════════════════════
-   ALL CONFIG COMES FROM URL PARAMS — no editing needed ever.
-
-   QR code URL format:
-   https://harjeet-001.github.io/feedback-automation/?biz=NAME&type=TYPE&email=EMAIL&google=GOOGLE_URL
-
-   Example:
-   https://harjeet-001.github.io/feedback-automation/?biz=Raj's Bakery&type=Bakery & Cafe&email=raj@bakery.com&google=https://search.google.com/local/writereview?placeid=ABC123
-   ═══════════════════════════════════════════════════════════ */
-
 const p             = new URLSearchParams(window.location.search);
 const BUSINESS_NAME = p.get('biz')    || '';
 const BUSINESS_TYPE = p.get('type')   || '';
 const OWNER_EMAIL   = p.get('email')  || '';
 const GOOGLE_URL    = p.get('google') || '';
 
-/* show warning if params missing */
 if(!BUSINESS_NAME || !OWNER_EMAIL){
   document.getElementById('main-content').innerHTML = `
     <div class="cfg-warn">
@@ -175,7 +164,6 @@ if(row){
     const b = document.createElement('button');
     b.className = 'star-btn';
     b.setAttribute('aria-label', i + ' star' + (i > 1 ? 's' : ''));
-    b.dataset.v = i;
     b.innerHTML = `<svg viewBox="0 0 24 24">
       <path class="outline" d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zm-10 6.11l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 3.99 4.38.38-3.32 2.88 1 4.28L12 15.35z"/>
       <path class="filled" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
@@ -187,7 +175,7 @@ if(row){
 
 function rate(v){
   rating = v;
-  document.querySelectorAll('.star-btn').forEach((b, i) => b.classList.toggle('lit', i < v));
+  document.querySelectorAll('.star-btn').forEach((b,i) => b.classList.toggle('lit', i < v));
   document.getElementById('star-label').textContent = LABELS[v];
   document.getElementById('review-section').classList.add('show');
   document.getElementById('submit-bar').classList.add('show');
@@ -206,29 +194,44 @@ function checkReady(){
 }
 
 function submitReview(){
-  const msg  = ta.value.trim();
+  const msg = ta.value.trim();
   if(!msg) return;
   const name  = document.getElementById('reviewer-name').value.trim() || 'Anonymous';
   const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
   const subj  = encodeURIComponent('[Customer Feedback] ' + stars + ' — ' + BUSINESS_NAME);
   const body  = encodeURIComponent('Rating: ' + stars + ' (' + rating + '/5)\nFrom: ' + name + '\n\nFeedback:\n' + msg + '\n\n— Sent via review form');
-  window.location.href = 'mailto:' + OWNER_EMAIL + '?subject=' + subj + '&body=' + body;
+
   document.getElementById('review-section').classList.remove('show');
   document.getElementById('submit-bar').classList.remove('show');
-  setTimeout(() => {
-    if(rating >= 4) document.getElementById('ty-high').classList.add('show');
-    else            document.getElementById('ty-low').classList.add('show');
-  }, 400);
+
+  if(rating >= 4 && GOOGLE_URL){
+    /* show thank you with countdown, then auto-open Google */
+    document.getElementById('ty-high').classList.add('show');
+    /* send feedback email via mailto in background */
+    window.open('mailto:' + OWNER_EMAIL + '?subject=' + subj + '&body=' + body);
+    /* countdown 2 → 1 → redirect */
+    let count = 2;
+    const cd = document.getElementById('countdown');
+    const timer = setInterval(() => {
+      count--;
+      if(count <= 0){
+        clearInterval(timer);
+        cd.textContent = 'Opening Google...';
+        window.location.href = GOOGLE_URL;
+      } else {
+        cd.textContent = 'Opening Google in ' + count + '...';
+      }
+    }, 1000);
+  } else {
+    /* low rating — email owner, show private thank you */
+    window.location.href = 'mailto:' + OWNER_EMAIL + '?subject=' + subj + '&body=' + body;
+    setTimeout(() => { document.getElementById('ty-low').classList.add('show'); }, 400);
+  }
 }
 
 function goGoogle(e){
   e.preventDefault();
   if(GOOGLE_URL) window.location.href = GOOGLE_URL;
-}
-
-function skipGoogle(){
-  const box = document.getElementById('ty-high');
-  box.innerHTML = '<p style="text-align:center;padding:32px 0;font-size:15px;color:#5f6368">Thanks for visiting! See you again soon. 😊</p>';
 }
 
 function resetForm(){
