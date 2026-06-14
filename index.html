@@ -53,12 +53,20 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
 .btn-post:active{background:#1557b0}
 .ty-low{display:none;padding:48px 24px;text-align:center}
 .ty-low.show{display:block}
-.big-check{width:72px;height:72px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.big-check{width:72px;height:72px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:justify;margin:0 auto 20px}
+.big-check{display:flex;align-items:center;justify-content:center}
 .big-check svg{width:40px;height:40px;fill:#137333}
 .ty-low h2{font-size:22px;font-weight:600;color:#202124;margin-bottom:10px}
 .ty-low p{font-size:15px;color:#5f6368;line-height:1.6}
 .uploaded-badge{display:inline-flex;align-items:center;gap:6px;background:#e6f4ea;border:1px solid #9fe1cb;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;color:#137333;margin-top:16px}
 .uploaded-badge svg{width:16px;height:16px;fill:#137333}
+/* blocked screen */
+.blocked{display:none;padding:48px 24px;text-align:center}
+.blocked.show{display:block}
+.blocked-icon{width:72px;height:72px;border-radius:50%;background:#fce8e6;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px}
+.blocked h2{font-size:20px;font-weight:600;color:#202124;margin-bottom:10px}
+.blocked p{font-size:14px;color:#5f6368;line-height:1.6}
+/* warning */
 .cfg-warn{margin:24px 16px;background:#fce8e6;border:1px solid #f5c6c2;border-radius:8px;padding:16px}
 .cfg-warn h3{font-size:14px;font-weight:600;color:#b71c1c;margin-bottom:6px}
 .cfg-warn p{font-size:13px;color:#c62828;line-height:1.5}
@@ -75,74 +83,104 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
   </div>
 
   <div id="main-content">
-    <div class="place-header">
-      <div class="place-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-      </div>
-      <div>
-        <div class="place-name" id="biz-name"></div>
-        <div class="place-type" id="biz-type"></div>
-      </div>
+
+    <!-- BLOCKED SCREEN -->
+    <div class="blocked" id="blocked-screen">
+      <div class="blocked-icon">🚫</div>
+      <h2>Service Unavailable</h2>
+      <p>This review service is currently unavailable for this business. Please contact the business directly.</p>
     </div>
 
-    <div class="section-label">How would you rate your experience?</div>
-    <div class="stars-wrap">
-      <div class="stars-row" id="stars-row"></div>
-      <div class="star-label" id="star-label">&nbsp;</div>
-    </div>
-
-    <!-- 1-2 stars only: category chips + feedback -->
-    <div class="category-section" id="category-section">
-      <div class="cat-label">What specific service made you feel this way?</div>
-      <div class="chips" id="chips">
-        <button class="chip" onclick="toggleChip(this)">🍽️ Food Quality</button>
-        <button class="chip" onclick="toggleChip(this)">⚡ Service Speed</button>
-        <button class="chip" onclick="toggleChip(this)">😐 Staff Behaviour</button>
-        <button class="chip" onclick="toggleChip(this)">🧹 Cleanliness</button>
-        <button class="chip" onclick="toggleChip(this)">💰 Pricing</button>
-        <button class="chip" onclick="toggleChip(this)">🌡️ Ambience</button>
-        <button class="chip" onclick="toggleChip(this)">📦 Packaging</button>
-        <button class="chip" onclick="toggleChip(this)">🔇 Noise Level</button>
-        <button class="chip" onclick="toggleChip(this)">🅿️ Parking</button>
-        <button class="chip" onclick="toggleChip(this)">📶 WiFi</button>
+    <!-- NORMAL CONTENT -->
+    <div id="review-content">
+      <div class="place-header">
+        <div class="place-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div>
+          <div class="place-name" id="biz-name"></div>
+          <div class="place-type" id="biz-type"></div>
+        </div>
       </div>
-      <div class="review-section">
-        <textarea id="review-text" placeholder="Tell us more so we can improve..." maxlength="4096"></textarea>
-        <div class="char-count" id="char-count">0 / 4096</div>
-        <div class="name-row">
-          <input type="text" id="reviewer-name" placeholder="Your name (optional)">
+
+      <div class="section-label">How would you rate your experience?</div>
+      <div class="stars-wrap">
+        <div class="stars-row" id="stars-row"></div>
+        <div class="star-label" id="star-label">&nbsp;</div>
+      </div>
+
+      <div class="category-section" id="category-section">
+        <div class="cat-label">What specific service made you feel this way?</div>
+        <div class="chips">
+          <button class="chip" onclick="toggleChip(this)">🍽️ Food Quality</button>
+          <button class="chip" onclick="toggleChip(this)">⚡ Service Speed</button>
+          <button class="chip" onclick="toggleChip(this)">😐 Staff Behaviour</button>
+          <button class="chip" onclick="toggleChip(this)">🧹 Cleanliness</button>
+          <button class="chip" onclick="toggleChip(this)">💰 Pricing</button>
+          <button class="chip" onclick="toggleChip(this)">🌡️ Ambience</button>
+          <button class="chip" onclick="toggleChip(this)">📦 Packaging</button>
+          <button class="chip" onclick="toggleChip(this)">🔇 Noise Level</button>
+          <button class="chip" onclick="toggleChip(this)">🅿️ Parking</button>
+          <button class="chip" onclick="toggleChip(this)">📶 WiFi</button>
+        </div>
+        <div class="review-section">
+          <textarea id="review-text" placeholder="Tell us more so we can improve..." maxlength="4096"></textarea>
+          <div class="char-count" id="char-count">0 / 4096</div>
+          <div class="name-row">
+            <input type="text" id="reviewer-name" placeholder="Your name (optional)">
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-bar" id="submit-bar">
+        <button class="btn-cancel" onclick="resetForm()">Cancel</button>
+        <button class="btn-post" id="btn-post" onclick="submitLow()">Send Feedback</button>
+      </div>
+
+      <div class="ty-low" id="ty-low">
+        <div class="big-check">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+        </div>
+        <h2>Thank you for your feedback</h2>
+        <p>The owner will personally look into this and make it right for you.</p>
+        <div class="uploaded-badge">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          Your review has been submitted ✓
         </div>
       </div>
     </div>
 
-    <div class="submit-bar" id="submit-bar">
-      <button class="btn-cancel" onclick="resetForm()">Cancel</button>
-      <button class="btn-post" id="btn-post" onclick="submitLow()">Send Feedback</button>
-    </div>
-
-    <div class="ty-low" id="ty-low">
-      <div class="big-check">
-        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-      </div>
-      <h2>Thank you for your feedback</h2>
-      <p>The owner will personally look into this and make it right for you.</p>
-      <div class="uploaded-badge">
-        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-        Your review has been submitted ✓
-      </div>
-    </div>
   </div>
 </div>
 
 <script>
+/* ═══════════════════════════════════════════════════════
+   BLOCKED CLIENTS LIST
+   To block a client: add their exact business name below
+   To unblock: remove their name from the list
+   Names must match exactly what was used in the QR URL
+   ═══════════════════════════════════════════════════════ */
+const BLOCKED_CLIENTS = [
+  // "Ragam Bakery",
+  // "Raj Salon",
+  // "Hotel XYZ",
+];
+/* ═══════════════════════════════════════════════════════ */
+
 const p             = new URLSearchParams(window.location.search);
 const BUSINESS_NAME = p.get('biz')    || '';
 const BUSINESS_TYPE = p.get('type')   || '';
 const OWNER_EMAIL   = p.get('email')  || '';
 const GOOGLE_URL    = p.get('google') || '';
 
-if(!BUSINESS_NAME || !OWNER_EMAIL){
-  document.getElementById('main-content').innerHTML = `
+/* check if blocked */
+const isBlocked = BLOCKED_CLIENTS.map(b => b.toLowerCase()).includes(BUSINESS_NAME.toLowerCase());
+
+if(isBlocked){
+  document.getElementById('review-content').style.display = 'none';
+  document.getElementById('blocked-screen').classList.add('show');
+} else if(!BUSINESS_NAME || !OWNER_EMAIL){
+  document.getElementById('review-content').innerHTML = `
     <div class="cfg-warn">
       <h3>⚠️ Missing setup parameters</h3>
       <p>This page needs URL parameters to work. Use this format for your QR code:</p>
@@ -153,12 +191,11 @@ if(!BUSINESS_NAME || !OWNER_EMAIL){
   document.getElementById('biz-type').textContent = BUSINESS_TYPE || 'Local Business';
 }
 
-/* 3,4,5 = GOOD → Google   |   1,2 = BAD → private form */
 const LABELS = ['','Terrible','Poor','Okay','Good','Excellent'];
 let rating = 0;
 
 const row = document.getElementById('stars-row');
-if(row){
+if(row && !isBlocked){
   for(let i = 1; i <= 5; i++){
     const b = document.createElement('button');
     b.className = 'star-btn';
@@ -176,19 +213,13 @@ function rate(v){
   rating = v;
   document.querySelectorAll('.star-btn').forEach((b,i) => b.classList.toggle('lit', i < v));
   document.getElementById('star-label').textContent = LABELS[v];
-
   if(v >= 3){
-    /* ✅ 3, 4, 5 stars → instant redirect to Google, no delay */
     if(GOOGLE_URL) window.location.href = GOOGLE_URL;
   } else {
-    /* ❌ 1 or 2 stars → show chips + feedback form */
     document.getElementById('category-section').classList.add('show');
     document.getElementById('submit-bar').classList.add('show');
     checkReady();
-    setTimeout(() => {
-      const ta = document.getElementById('review-text');
-      if(ta) ta.focus();
-    }, 200);
+    setTimeout(() => { const ta = document.getElementById('review-text'); if(ta) ta.focus(); }, 200);
   }
 }
 
