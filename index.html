@@ -29,20 +29,15 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
 .star-btn.lit svg .outline{display:none}
 .star-btn.lit svg .filled{display:block}
 .star-label{margin-top:10px;font-size:14px;color:#5f6368;height:20px;text-align:center}
-
-/* category chips */
 .category-section{padding:16px;border-bottom:1px solid #e8eaed;display:none}
 .category-section.show{display:block}
 .cat-label{font-size:13px;color:#202124;font-weight:500;margin-bottom:12px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .chip{padding:8px 14px;border-radius:20px;border:1.5px solid #dadce0;background:#fff;font-size:13px;color:#202124;cursor:pointer;font-family:inherit;transition:all .12s;-webkit-tap-highlight-color:transparent}
 .chip.selected{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8;font-weight:500}
 .chip:active{transform:scale(.95)}
-
-/* feedback textarea */
-.review-section{padding:0 16px 16px;display:none}
-.review-section.show{display:block}
-.review-section textarea{width:100%;min-height:100px;border:1px solid #dadce0;border-radius:4px;padding:12px;font-size:15px;font-family:inherit;color:#202124;resize:none;outline:none;line-height:1.5;transition:border-color .15s;margin-top:4px}
+.review-section{display:block}
+.review-section textarea{width:100%;min-height:100px;border:1px solid #dadce0;border-radius:4px;padding:12px;font-size:15px;font-family:inherit;color:#202124;resize:none;outline:none;line-height:1.5;transition:border-color .15s}
 .review-section textarea:focus{border-color:#1a73e8;border-width:2px;padding:11px}
 .review-section textarea::placeholder{color:#80868b}
 .char-count{text-align:right;font-size:12px;color:#80868b;margin-top:4px}
@@ -50,15 +45,12 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
 .name-row input{width:100%;border:1px solid #dadce0;border-radius:4px;padding:11px 12px;font-size:15px;font-family:inherit;color:#202124;outline:none;transition:border-color .15s}
 .name-row input:focus{border-color:#1a73e8;border-width:2px;padding:10px 11px}
 .name-row input::placeholder{color:#80868b}
-
 .submit-bar{padding:12px 16px;border-top:1px solid #e8eaed;display:none;gap:8px;align-items:center;justify-content:flex-end}
 .submit-bar.show{display:flex}
 .btn-cancel{padding:9px 16px;border:none;background:transparent;font-size:14px;font-weight:500;color:#5f6368;font-family:inherit;cursor:pointer;border-radius:4px}
 .btn-post{padding:9px 20px;border:none;background:#1a73e8;color:#fff;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;border-radius:4px;opacity:.5;pointer-events:none;transition:background .12s}
 .btn-post.ready{opacity:1;pointer-events:auto}
 .btn-post:active{background:#1557b0}
-
-/* low star thank you */
 .ty-low{display:none;padding:48px 24px;text-align:center}
 .ty-low.show{display:block}
 .big-check{width:72px;height:72px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
@@ -67,7 +59,6 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
 .ty-low p{font-size:15px;color:#5f6368;line-height:1.6}
 .uploaded-badge{display:inline-flex;align-items:center;gap:6px;background:#e6f4ea;border:1px solid #9fe1cb;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;color:#137333;margin-top:16px}
 .uploaded-badge svg{width:16px;height:16px;fill:#137333}
-
 .cfg-warn{margin:24px 16px;background:#fce8e6;border:1px solid #f5c6c2;border-radius:8px;padding:16px}
 .cfg-warn h3{font-size:14px;font-weight:600;color:#b71c1c;margin-bottom:6px}
 .cfg-warn p{font-size:13px;color:#c62828;line-height:1.5}
@@ -76,7 +67,6 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
 </head>
 <body>
 <div class="sheet">
-
   <div class="topbar">
     <button class="back-btn" aria-label="Back">
       <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
@@ -101,9 +91,9 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
       <div class="star-label" id="star-label">&nbsp;</div>
     </div>
 
-    <!-- Low star: category chips + feedback -->
+    <!-- 1-2 stars only: category chips + feedback -->
     <div class="category-section" id="category-section">
-      <div class="cat-label">What went wrong? (select all that apply)</div>
+      <div class="cat-label">What specific service made you feel this way?</div>
       <div class="chips" id="chips">
         <button class="chip" onclick="toggleChip(this)">🍽️ Food Quality</button>
         <button class="chip" onclick="toggleChip(this)">⚡ Service Speed</button>
@@ -116,9 +106,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
         <button class="chip" onclick="toggleChip(this)">🅿️ Parking</button>
         <button class="chip" onclick="toggleChip(this)">📶 WiFi</button>
       </div>
-
-      <div class="review-section show" id="review-section">
-        <textarea id="review-text" placeholder="Tell us more about your experience so we can improve..." maxlength="4096"></textarea>
+      <div class="review-section">
+        <textarea id="review-text" placeholder="Tell us more so we can improve..." maxlength="4096"></textarea>
         <div class="char-count" id="char-count">0 / 4096</div>
         <div class="name-row">
           <input type="text" id="reviewer-name" placeholder="Your name (optional)">
@@ -131,7 +120,6 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
       <button class="btn-post" id="btn-post" onclick="submitLow()">Send Feedback</button>
     </div>
 
-    <!-- Low star thank you -->
     <div class="ty-low" id="ty-low">
       <div class="big-check">
         <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
@@ -144,8 +132,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
       </div>
     </div>
   </div>
-
 </div>
+
 <script>
 const p             = new URLSearchParams(window.location.search);
 const BUSINESS_NAME = p.get('biz')    || '';
@@ -165,7 +153,8 @@ if(!BUSINESS_NAME || !OWNER_EMAIL){
   document.getElementById('biz-type').textContent = BUSINESS_TYPE || 'Local Business';
 }
 
-const LABELS = ['','Terrible','Poor','Average','Good','Excellent'];
+/* 3,4,5 = GOOD → Google   |   1,2 = BAD → private form */
+const LABELS = ['','Terrible','Poor','Okay','Good','Excellent'];
 let rating = 0;
 
 const row = document.getElementById('stars-row');
@@ -189,14 +178,17 @@ function rate(v){
   document.getElementById('star-label').textContent = LABELS[v];
 
   if(v >= 3){
-    /* 3, 4, 5 stars — instant redirect to Google, no delay */
+    /* ✅ 3, 4, 5 stars → instant redirect to Google, no delay */
     if(GOOGLE_URL) window.location.href = GOOGLE_URL;
   } else {
-    /* 1 or 2 stars — show category chips + feedback form */
+    /* ❌ 1 or 2 stars → show chips + feedback form */
     document.getElementById('category-section').classList.add('show');
     document.getElementById('submit-bar').classList.add('show');
     checkReady();
-    setTimeout(() => document.getElementById('review-text').focus(), 200);
+    setTimeout(() => {
+      const ta = document.getElementById('review-text');
+      if(ta) ta.focus();
+    }, 200);
   }
 }
 
@@ -212,24 +204,23 @@ if(ta) ta.addEventListener('input', () => {
 });
 
 function checkReady(){
-  /* ready if at least one chip selected OR textarea has text */
   const anyChip = document.querySelectorAll('.chip.selected').length > 0;
   const hasText = ta && ta.value.trim().length > 0;
   document.getElementById('btn-post').classList.toggle('ready', anyChip || hasText);
 }
 
 function submitLow(){
-  const msg       = ta ? ta.value.trim() : '';
-  const name      = document.getElementById('reviewer-name').value.trim() || 'Anonymous';
-  const stars     = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-  const selected  = [...document.querySelectorAll('.chip.selected')].map(c => c.textContent).join(', ');
-  const issues    = selected ? 'Issues: ' + selected + '\n\n' : '';
-  const subj      = encodeURIComponent('[Private Feedback] ' + stars + ' — ' + BUSINESS_NAME);
-  const body      = encodeURIComponent(
+  const msg      = ta ? ta.value.trim() : '';
+  const name     = document.getElementById('reviewer-name').value.trim() || 'Anonymous';
+  const stars    = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+  const selected = [...document.querySelectorAll('.chip.selected')].map(c => c.textContent).join(', ');
+  const issues   = selected ? 'Issues reported: ' + selected + '\n\n' : '';
+  const subj     = encodeURIComponent('[Private Feedback] ' + stars + ' — ' + BUSINESS_NAME);
+  const body     = encodeURIComponent(
     'Rating: ' + stars + ' (' + rating + '/5)\n' +
     'From: ' + name + '\n\n' +
     issues +
-    (msg ? 'Feedback:\n' + msg : 'No additional comments') +
+    (msg ? 'Additional feedback:\n' + msg : 'No additional comments') +
     '\n\n— Sent via review form'
   );
   window.location.href = 'mailto:' + OWNER_EMAIL + '?subject=' + subj + '&body=' + body;
