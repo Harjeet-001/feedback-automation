@@ -2,186 +2,305 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Flyer Generator</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rate Your Experience</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Google Sans',Roboto,Arial,sans-serif;background:#e8eaed;display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:20px;min-height:100vh}
-
-/* builder panel */
-.builder{background:#fff;border-radius:12px;padding:20px 24px;width:100%;max-width:520px;box-shadow:0 1px 8px rgba(0,0,0,.12)}
-.builder h2{font-size:16px;font-weight:600;color:#202124;margin-bottom:4px}
-.builder p{font-size:13px;color:#5f6368;margin-bottom:16px}
-.field{margin-bottom:12px}
-.field label{display:block;font-size:12px;font-weight:600;color:#5f6368;margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase}
-.field input{width:100%;padding:10px 12px;border:1px solid #dadce0;border-radius:6px;font-size:14px;font-family:inherit;color:#202124;outline:none;transition:border-color .15s}
-.field input:focus{border-color:#1a73e8;border-width:2px;padding:9px 11px}
-.field input::placeholder{color:#9aa0a6}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn-row{display:flex;gap:10px;margin-top:16px}
-.btn-gen{flex:1;padding:11px;background:#1a73e8;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer}
-.btn-gen:active{background:#1557b0}
-.btn-print{flex:1;padding:11px;background:#202124;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer}
-.url-out{margin-top:12px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:6px;padding:10px 12px;font-size:11px;color:#5f6368;word-break:break-all;display:none}
-.url-out strong{color:#202124;display:block;margin-bottom:4px;font-size:12px}
-
-/* A5 flyer */
-.card{width:148mm;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;min-height:210mm}
-.top{background:#1a73e8;padding:22px 20px 56px;text-align:center;position:relative}
-.top::after{content:'';position:absolute;bottom:0;left:0;right:0;height:36px;background:#fff;border-radius:50% 50% 0 0/100% 100% 0 0}
-.top-icon{width:52px;height:52px;border-radius:10px;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
-.top-icon svg{width:28px;height:28px;fill:#fff}
-.top-biz{font-size:17px;font-weight:700;color:#fff;margin-bottom:3px}
-.top-type{font-size:11px;color:rgba(255,255,255,.8)}
-.body{padding:22px 20px 16px;flex:1;display:flex;flex-direction:column;align-items:center;text-align:center}
-.headline{font-size:20px;font-weight:700;color:#202124;line-height:1.25;margin-bottom:6px;letter-spacing:-.3px}
-.headline span{color:#1a73e8}
-.sub{font-size:12px;color:#80868b;margin-bottom:16px}
-.qr-outer{border:3px solid #1a73e8;border-radius:12px;padding:8px;margin-bottom:10px;background:#fff;display:inline-block}
-#qrcode canvas,#qrcode img{display:block;width:150px!important;height:150px!important}
-.scan-tag{font-size:11px;font-weight:700;color:#1a73e8;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
-.steps{display:flex;width:100%;margin-bottom:14px;border:1px solid #e8eaed;border-radius:8px;overflow:hidden}
-.step{flex:1;padding:10px 6px;text-align:center;border-right:1px solid #e8eaed}
-.step:last-child{border-right:none}
-.step-num{width:22px;height:22px;border-radius:50%;background:#e8f0fe;color:#1a73e8;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 5px}
-.step-txt{font-size:9.5px;color:#5f6368;line-height:1.4}
-.outcomes{display:flex;gap:8px;width:100%}
-.oc{flex:1;border-radius:6px;padding:10px 8px;text-align:center}
-.oc-hi{background:#e8f5e9;border:1px solid #a5d6a7}
-.oc-lo{background:#fce8e6;border:1px solid #f5c6c2}
-.oc-stars{font-size:14px;margin-bottom:4px}
-.oc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-.oc-hi .oc-label{color:#2e7d32}
-.oc-lo .oc-label{color:#b71c1c}
-.oc-desc{font-size:9px;color:#5f6368;margin-top:3px;line-height:1.4}
-.foot{background:#f8f9fa;border-top:1px solid #e8eaed;padding:10px 16px;text-align:center;font-size:9.5px;color:#80868b}
-
-@media print{
-  body{background:#fff;padding:0;margin:0}
-  .builder{display:none}
-  .card{box-shadow:none;width:148mm;height:210mm;margin:0}
-  .qr-outer{padding:12px}
-  #qrcode canvas,#qrcode img{width:140px!important;height:140px!important}
-  @page{size:A5 portrait;margin:0}
-}
+html,body{height:100%;background:#f1f3f4;font-family:'Google Sans',Roboto,Arial,sans-serif}
+body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-height:100vh}
+.sheet{width:100%;max-width:420px;background:#fff;min-height:100vh}
+.topbar{background:#1a73e8;padding:14px 16px 12px;display:flex;align-items:center;gap:12px}
+.back-btn{width:36px;height:36px;border-radius:50%;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.back-btn svg{width:20px;height:20px;fill:#fff}
+.topbar-title{font-size:18px;font-weight:500;color:#fff}
+.place-header{padding:16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #e8eaed}
+.place-icon{width:48px;height:48px;border-radius:8px;background:#e8f0fe;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.place-icon svg{width:28px;height:28px;fill:#1a73e8}
+.place-name{font-size:16px;font-weight:500;color:#202124;margin-bottom:2px}
+.place-type{font-size:13px;color:#5f6368}
+.section-label{padding:16px 16px 8px;font-size:13px;color:#5f6368}
+.stars-wrap{padding:4px 16px 20px;border-bottom:1px solid #e8eaed}
+.stars-row{display:flex;gap:6px;justify-content:center}
+.star-btn{width:54px;height:54px;border:none;background:transparent;cursor:pointer;padding:0;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:transform .1s;-webkit-tap-highlight-color:transparent}
+.star-btn:active{transform:scale(.85)}
+.star-btn svg{width:44px;height:44px}
+.star-btn svg .outline{fill:#dadce0}
+.star-btn svg .filled{fill:#fbbc04;display:none}
+.star-btn.lit svg .outline{display:none}
+.star-btn.lit svg .filled{display:block}
+.star-label{margin-top:10px;font-size:14px;color:#5f6368;height:20px;text-align:center}
+.category-section{padding:16px;border-bottom:1px solid #e8eaed;display:none}
+.category-section.show{display:block}
+.cat-label{font-size:13px;color:#202124;font-weight:500;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{padding:8px 14px;border-radius:20px;border:1.5px solid #dadce0;background:#fff;font-size:13px;color:#202124;cursor:pointer;font-family:inherit;transition:all .12s;-webkit-tap-highlight-color:transparent}
+.chip.selected{border-color:#1a73e8;background:#e8f0fe;color:#1a73e8;font-weight:500}
+.chip:active{transform:scale(.95)}
+.review-section{display:block}
+.review-section textarea{width:100%;min-height:100px;border:1px solid #dadce0;border-radius:4px;padding:12px;font-size:15px;font-family:inherit;color:#202124;resize:none;outline:none;line-height:1.5;transition:border-color .15s}
+.review-section textarea:focus{border-color:#1a73e8;border-width:2px;padding:11px}
+.review-section textarea::placeholder{color:#80868b}
+.char-count{text-align:right;font-size:12px;color:#80868b;margin-top:4px}
+.name-row{margin-top:10px}
+.name-row input{width:100%;border:1px solid #dadce0;border-radius:4px;padding:11px 12px;font-size:15px;font-family:inherit;color:#202124;outline:none;transition:border-color .15s}
+.name-row input:focus{border-color:#1a73e8;border-width:2px;padding:10px 11px}
+.name-row input::placeholder{color:#80868b}
+.submit-bar{padding:12px 16px;border-top:1px solid #e8eaed;display:none;gap:8px;align-items:center;justify-content:flex-end}
+.submit-bar.show{display:flex}
+.btn-cancel{padding:9px 16px;border:none;background:transparent;font-size:14px;font-weight:500;color:#5f6368;font-family:inherit;cursor:pointer;border-radius:4px}
+.btn-post{padding:9px 20px;border:none;background:#1a73e8;color:#fff;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;border-radius:4px;opacity:.5;pointer-events:none;transition:background .12s}
+.btn-post.ready{opacity:1;pointer-events:auto}
+.btn-post:active{background:#1557b0}
+.btn-post.sending{opacity:.7;pointer-events:none}
+.err-msg{display:none;background:#fce8e6;border:1px solid #f5c6c2;border-radius:6px;padding:10px 12px;margin-top:10px;font-size:12px;color:#b71c1c;line-height:1.5}
+.err-msg.show{display:block}
+.ty-low{display:none;padding:48px 24px;text-align:center}
+.ty-low.show{display:block}
+.big-check{width:72px;height:72px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:justify;margin:0 auto 20px}
+.big-check{display:flex;align-items:center;justify-content:center}
+.big-check svg{width:40px;height:40px;fill:#137333}
+.ty-low h2{font-size:22px;font-weight:600;color:#202124;margin-bottom:10px}
+.ty-low p{font-size:15px;color:#5f6368;line-height:1.6}
+.uploaded-badge{display:inline-flex;align-items:center;gap:6px;background:#e6f4ea;border:1px solid #9fe1cb;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;color:#137333;margin-top:16px}
+.uploaded-badge svg{width:16px;height:16px;fill:#137333}
+/* blocked screen */
+.blocked{display:none;padding:48px 24px;text-align:center}
+.blocked.show{display:block}
+.blocked-icon{width:72px;height:72px;border-radius:50%;background:#fce8e6;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px}
+.blocked h2{font-size:20px;font-weight:600;color:#202124;margin-bottom:10px}
+.blocked p{font-size:14px;color:#5f6368;line-height:1.6}
+/* warning */
+.cfg-warn{margin:24px 16px;background:#fce8e6;border:1px solid #f5c6c2;border-radius:8px;padding:16px}
+.cfg-warn h3{font-size:14px;font-weight:600;color:#b71c1c;margin-bottom:6px}
+.cfg-warn p{font-size:13px;color:#c62828;line-height:1.5}
+.cfg-warn code{background:#fdecea;padding:2px 6px;border-radius:4px;font-size:11px;display:block;margin-top:6px;word-break:break-all;color:#b71c1c}
 </style>
 </head>
 <body>
-
-<!-- Builder panel -->
-<div class="builder">
-  <h2>Flyer Generator</h2>
-  <p>Fill in the client details — the QR code and flyer update instantly.<br><span style="color:#1a73e8;font-size:12px">💡 Form ID: sign up at formspree.io using the client's email → create a form → copy the ID after /f/</span></p>
-
-  <div class="field">
-    <label>Business Name</label>
-    <input type="text" id="f-biz" placeholder="e.g. Raj's Bakery" oninput="liveUpdate()">
+<div class="sheet">
+  <div class="topbar">
+    <button class="back-btn" aria-label="Back">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <span class="topbar-title">Rate &amp; review</span>
   </div>
-  <div class="row2">
-    <div class="field">
-      <label>Business Type</label>
-      <input type="text" id="f-type" placeholder="e.g. Bakery & Café" oninput="liveUpdate()">
+
+  <div id="main-content">
+
+    <!-- BLOCKED SCREEN -->
+    <div class="blocked" id="blocked-screen">
+      <div class="blocked-icon">🚫</div>
+      <h2>Service Unavailable</h2>
+      <p>This review service is currently unavailable for this business. Please contact the business directly.</p>
     </div>
-    <div class="field">
-      <label>Formspree Form ID</label>
-      <input type="text" id="f-formid" placeholder="e.g. xdavqjrz" oninput="liveUpdate()">
-    </div>
-  </div>
-  <div class="field">
-    <label>Google Review Link</label>
-    <input type="text" id="f-google" placeholder="https://search.google.com/local/writereview?placeid=..." oninput="liveUpdate()">
-  </div>
 
-  <div class="btn-row">
-    <button class="btn-gen" onclick="generate()">Generate QR &amp; Flyer</button>
-    <button class="btn-print" onclick="window.print()">Print A5</button>
-  </div>
-
-  <div class="url-out" id="url-out">
-    <strong>QR code URL for this client:</strong>
-    <span id="url-text"></span>
-  </div>
-</div>
-
-<!-- Flyer preview -->
-<div class="card">
-  <div class="top">
-    <div class="top-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-    </div>
-    <div class="top-biz" id="flyer-biz">Business Name</div>
-    <div class="top-type" id="flyer-type">Local Business</div>
-  </div>
-  <div class="body">
-    <h2 class="headline">Enjoyed your visit?<br><span>Share your experience</span></h2>
-    <p class="sub">Scan below — takes just 15 seconds</p>
-    <div class="qr-outer"><div id="qrcode"></div></div>
-    <div class="scan-tag">Scan with your phone camera</div>
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><div class="step-txt">Scan the QR code</div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-txt">Tap your star rating</div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-txt">Write your review</div></div>
-    </div>
-    <div class="outcomes">
-      <div class="oc oc-hi">
-        <div class="oc-stars">⭐⭐⭐</div>
-        <div class="oc-label">3–5 Stars</div>
-        <div class="oc-desc">Instantly taken to post a public Google review</div>
+    <!-- NORMAL CONTENT -->
+    <div id="review-content">
+      <div class="place-header">
+        <div class="place-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div>
+          <div class="place-name" id="biz-name"></div>
+          <div class="place-type" id="biz-type"></div>
+        </div>
       </div>
-      <div class="oc oc-lo">
-        <div class="oc-stars">😞</div>
-        <div class="oc-label">1–2 Stars</div>
-        <div class="oc-desc">Feedback sent privately and directly to the owner</div>
+
+      <div class="section-label">How would you rate your experience?</div>
+      <div class="stars-wrap">
+        <div class="stars-row" id="stars-row"></div>
+        <div class="star-label" id="star-label">&nbsp;</div>
+      </div>
+
+      <div class="category-section" id="category-section">
+        <div class="cat-label">What specific service made you feel this way?</div>
+        <div class="chips">
+          <button class="chip" onclick="toggleChip(this)">🍽️ Food Quality</button>
+          <button class="chip" onclick="toggleChip(this)">⚡ Service Speed</button>
+          <button class="chip" onclick="toggleChip(this)">😐 Staff Behaviour</button>
+          <button class="chip" onclick="toggleChip(this)">🧹 Cleanliness</button>
+          <button class="chip" onclick="toggleChip(this)">💰 Pricing</button>
+          <button class="chip" onclick="toggleChip(this)">🌡️ Ambience</button>
+          <button class="chip" onclick="toggleChip(this)">📦 Packaging</button>
+          <button class="chip" onclick="toggleChip(this)">🔇 Noise Level</button>
+          <button class="chip" onclick="toggleChip(this)">🅿️ Parking</button>
+          <button class="chip" onclick="toggleChip(this)">📶 WiFi</button>
+        </div>
+        <div class="review-section">
+          <textarea id="review-text" placeholder="Tell us more so we can improve..." maxlength="4096"></textarea>
+          <div class="char-count" id="char-count">0 / 4096</div>
+          <div class="name-row">
+            <input type="text" id="reviewer-name" placeholder="Your name (optional)">
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-bar" id="submit-bar">
+        <button class="btn-cancel" onclick="resetForm()">Cancel</button>
+        <button class="btn-post" id="btn-post" onclick="submitLow()">Send Feedback</button>
+      </div>
+      <div class="err-msg" id="err-msg" style="margin:0 16px">Something went wrong sending your feedback. Please try again or contact the business directly.</div>
+
+      <div class="ty-low" id="ty-low">
+        <div class="big-check">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+        </div>
+        <h2>Thank you for your feedback</h2>
+        <p>The owner has been notified directly and will personally look into this and make it right for you.</p>
+        <div class="uploaded-badge">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          Your review has been submitted ✓
+        </div>
       </div>
     </div>
+
   </div>
-  <div class="foot">Your honest feedback helps us serve you better — thank you for visiting!</div>
 </div>
 
 <script>
-const BASE = 'https://harjeet-001.github.io/feedback-automation/';
-let qrObj = null;
+/* ═══════════════════════════════════════════════════════
+   BLOCKED CLIENTS LIST
+   To block a client: add their exact business name below
+   To unblock: remove their name from the list
+   Names must match exactly what was used in the QR URL
+   ═══════════════════════════════════════════════════════ */
+const BLOCKED_CLIENTS = [
+  // "Ragam Bakery",
+  // "Raj Salon",
+  // "Hotel XYZ",
+];
+/* ═══════════════════════════════════════════════════════ */
 
-function buildURL(){
-  const biz    = document.getElementById('f-biz').value.trim();
-  const type   = document.getElementById('f-type').value.trim();
-  const formid = document.getElementById('f-formid').value.trim();
-  const google = document.getElementById('f-google').value.trim();
-  if(!biz && !formid) return BASE;
-  const params = new URLSearchParams();
-  if(biz)    params.set('biz', biz);
-  if(type)   params.set('type', type);
-  if(formid) params.set('formid', formid);
-  if(google) params.set('google', google);
-  return BASE + '?' + params.toString();
+const p             = new URLSearchParams(window.location.search);
+const BUSINESS_NAME = p.get('biz')    || '';
+const BUSINESS_TYPE = p.get('type')   || '';
+const GOOGLE_URL    = p.get('google') || '';
+const FORM_ID       = p.get('formid') || '';
+
+/* check if blocked */
+const isBlocked = BLOCKED_CLIENTS.map(b => b.toLowerCase()).includes(BUSINESS_NAME.toLowerCase());
+
+if(isBlocked){
+  document.getElementById('review-content').style.display = 'none';
+  document.getElementById('blocked-screen').classList.add('show');
+} else if(!BUSINESS_NAME || !FORM_ID){
+  document.getElementById('review-content').innerHTML = `
+    <div class="cfg-warn">
+      <h3>⚠️ Missing setup parameters</h3>
+      <p>This page needs URL parameters to work. Use this format for your QR code:</p>
+      <code>https://harjeet-001.github.io/feedback-automation/?biz=Business Name&type=Restaurant&formid=YOUR_FORMSPREE_ID&google=GOOGLE_REVIEW_URL</code>
+    </div>`;
+} else {
+  document.getElementById('biz-name').textContent = BUSINESS_NAME;
+  document.getElementById('biz-type').textContent = BUSINESS_TYPE || 'Local Business';
 }
 
-function makeQR(url){
-  document.getElementById('qrcode').innerHTML = '';
-  qrObj = new QRCode(document.getElementById('qrcode'), {
-    text: url, width: 300, height: 300,
-    colorDark: '#1a73e8', colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.H
+const LABELS = ['','Terrible','Poor','Okay','Good','Excellent'];
+let rating = 0;
+
+const row = document.getElementById('stars-row');
+if(row && !isBlocked){
+  for(let i = 1; i <= 5; i++){
+    const b = document.createElement('button');
+    b.className = 'star-btn';
+    b.setAttribute('aria-label', i + ' star' + (i > 1 ? 's' : ''));
+    b.innerHTML = `<svg viewBox="0 0 24 24">
+      <path class="outline" d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zm-10 6.11l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 3.99 4.38.38-3.32 2.88 1 4.28L12 15.35z"/>
+      <path class="filled" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+    </svg>`;
+    b.addEventListener('click', () => rate(i));
+    row.appendChild(b);
+  }
+}
+
+function rate(v){
+  rating = v;
+  document.querySelectorAll('.star-btn').forEach((b,i) => b.classList.toggle('lit', i < v));
+  document.getElementById('star-label').textContent = LABELS[v];
+  if(v >= 3){
+    if(GOOGLE_URL) window.location.href = GOOGLE_URL;
+  } else {
+    document.getElementById('category-section').classList.add('show');
+    document.getElementById('submit-bar').classList.add('show');
+    checkReady();
+    setTimeout(() => { const ta = document.getElementById('review-text'); if(ta) ta.focus(); }, 200);
+  }
+}
+
+function toggleChip(el){
+  el.classList.toggle('selected');
+  checkReady();
+}
+
+const ta = document.getElementById('review-text');
+if(ta) ta.addEventListener('input', () => {
+  document.getElementById('char-count').textContent = ta.value.length + ' / 4096';
+  checkReady();
+});
+
+function checkReady(){
+  const anyChip = document.querySelectorAll('.chip.selected').length > 0;
+  const hasText = ta && ta.value.trim().length > 0;
+  document.getElementById('btn-post').classList.toggle('ready', anyChip || hasText);
+}
+
+function submitLow(){
+  const msg      = ta ? ta.value.trim() : '';
+  const name     = document.getElementById('reviewer-name').value.trim() || 'Anonymous';
+  const stars    = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+  const selected = [...document.querySelectorAll('.chip.selected')].map(c => c.textContent).join(', ');
+
+  if(!FORM_ID){
+    document.getElementById('err-msg').textContent = 'Setup error: missing form ID in QR link. Contact the service provider.';
+    document.getElementById('err-msg').classList.add('show');
+    return;
+  }
+
+  const btn = document.getElementById('btn-post');
+  btn.classList.add('sending');
+  btn.textContent = 'Sending...';
+  document.getElementById('err-msg').classList.remove('show');
+
+  fetch('https://formspree.io/f/' + FORM_ID, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      _subject: '[Private Feedback] ' + stars + ' — ' + BUSINESS_NAME,
+      business: BUSINESS_NAME,
+      rating: stars + ' (' + rating + '/5)',
+      name: name,
+      issues: selected || 'None selected',
+      feedback: msg || 'No additional comments'
+    })
+  })
+  .then(res => {
+    if(res.ok){
+      document.getElementById('category-section').classList.remove('show');
+      document.getElementById('submit-bar').classList.remove('show');
+      setTimeout(() => { document.getElementById('ty-low').classList.add('show'); }, 200);
+    } else {
+      throw new Error('Submit failed');
+    }
+  })
+  .catch(() => {
+    btn.classList.remove('sending');
+    btn.textContent = 'Send Feedback';
+    document.getElementById('err-msg').classList.add('show');
   });
 }
 
-function liveUpdate(){
-  const biz  = document.getElementById('f-biz').value.trim();
-  const type = document.getElementById('f-type').value.trim();
-  document.getElementById('flyer-biz').textContent  = biz  || 'Business Name';
-  document.getElementById('flyer-type').textContent = type || 'Local Business';
+function resetForm(){
+  rating = 0;
+  if(ta) ta.value = '';
+  const n = document.getElementById('reviewer-name');
+  if(n) n.value = '';
+  document.getElementById('char-count').textContent = '0 / 4096';
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('lit'));
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  document.getElementById('star-label').innerHTML = '&nbsp;';
+  document.getElementById('category-section').classList.remove('show');
+  document.getElementById('submit-bar').classList.remove('show');
 }
-
-function generate(){
-  liveUpdate();
-  const url = buildURL();
-  makeQR(url);
-  const out = document.getElementById('url-out');
-  out.style.display = 'block';
-  document.getElementById('url-text').textContent = url;
-}
-
-makeQR(BASE);
 </script>
 </body>
 </html>
