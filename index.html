@@ -51,6 +51,9 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
 .btn-post{padding:9px 20px;border:none;background:#1a73e8;color:#fff;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;border-radius:4px;opacity:.5;pointer-events:none;transition:background .12s}
 .btn-post.ready{opacity:1;pointer-events:auto}
 .btn-post:active{background:#1557b0}
+.btn-post.sending{opacity:.7;pointer-events:none}
+.err-msg{display:none;background:#fce8e6;border:1px solid #f5c6c2;border-radius:6px;padding:10px 12px;margin-top:10px;font-size:12px;color:#b71c1c;line-height:1.5}
+.err-msg.show{display:block}
 .ty-low{display:none;padding:48px 24px;text-align:center}
 .ty-low.show{display:block}
 .big-check{width:72px;height:72px;border-radius:50%;background:#e6f4ea;display:flex;align-items:center;justify-content:justify;margin:0 auto 20px}
@@ -136,6 +139,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
         <button class="btn-cancel" onclick="resetForm()">Cancel</button>
         <button class="btn-post" id="btn-post" onclick="submitLow()">Send Feedback</button>
       </div>
+      <div class="err-msg" id="err-msg" style="margin:0 16px">Something went wrong sending your feedback. Please try again or contact the business directly.</div>
 
       <div class="ty-low" id="ty-low">
         <div class="big-check">
@@ -172,6 +176,7 @@ const BUSINESS_NAME = p.get('biz')    || '';
 const BUSINESS_TYPE = p.get('type')   || '';
 const OWNER_EMAIL   = p.get('email')  || '';
 const GOOGLE_URL    = p.get('google') || '';
+const FORM_ID       = p.get('formid') || '';
 
 /* check if blocked */
 const isBlocked = BLOCKED_CLIENTS.map(b => b.toLowerCase()).includes(BUSINESS_NAME.toLowerCase());
@@ -179,12 +184,12 @@ const isBlocked = BLOCKED_CLIENTS.map(b => b.toLowerCase()).includes(BUSINESS_NA
 if(isBlocked){
   document.getElementById('review-content').style.display = 'none';
   document.getElementById('blocked-screen').classList.add('show');
-} else if(!BUSINESS_NAME || !OWNER_EMAIL){
+} else if(!BUSINESS_NAME || !FORM_ID){
   document.getElementById('review-content').innerHTML = `
     <div class="cfg-warn">
       <h3>⚠️ Missing setup parameters</h3>
       <p>This page needs URL parameters to work. Use this format for your QR code:</p>
-      <code>https://harjeet-001.github.io/feedback-automation/?biz=Business Name&type=Restaurant&email=owner@email.com&google=GOOGLE_REVIEW_URL</code>
+      <code>https://harjeet-001.github.io/feedback-automation/?biz=Business Name&type=Restaurant&formid=YOUR_FORMSPREE_ID&google=GOOGLE_REVIEW_URL</code>
     </div>`;
 } else {
   document.getElementById('biz-name').textContent = BUSINESS_NAME;
@@ -245,19 +250,44 @@ function submitLow(){
   const name     = document.getElementById('reviewer-name').value.trim() || 'Anonymous';
   const stars    = '★'.repeat(rating) + '☆'.repeat(5 - rating);
   const selected = [...document.querySelectorAll('.chip.selected')].map(c => c.textContent).join(', ');
-  const issues   = selected ? 'Issues reported: ' + selected + '\n\n' : '';
-  const subj     = encodeURIComponent('[Private Feedback] ' + stars + ' — ' + BUSINESS_NAME);
-  const body     = encodeURIComponent(
-    'Rating: ' + stars + ' (' + rating + '/5)\n' +
-    'From: ' + name + '\n\n' +
-    issues +
-    (msg ? 'Additional feedback:\n' + msg : 'No additional comments') +
-    '\n\n— Sent via review form'
-  );
-  window.location.href = 'mailto:' + OWNER_EMAIL + '?subject=' + subj + '&body=' + body;
-  document.getElementById('category-section').classList.remove('show');
-  document.getElementById('submit-bar').classList.remove('show');
-  setTimeout(() => { document.getElementById('ty-low').classList.add('show'); }, 400);
+
+  if(!FORM_ID){
+    document.getElementById('err-msg').textContent = 'Setup error: missing form ID in QR link. Contact the service provider.';
+    document.getElementById('err-msg').classList.add('show');
+    return;
+  }
+
+  const btn = document.getElementById('btn-post');
+  btn.classList.add('sending');
+  btn.textContent = 'Sending...';
+  document.getElementById('err-msg').classList.remove('show');
+
+  fetch('https://formspree.io/f/' + FORM_ID, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      _subject: '[Private Feedback] ' + stars + ' — ' + BUSINESS_NAME,
+      business: BUSINESS_NAME,
+      rating: stars + ' (' + rating + '/5)',
+      name: name,
+      issues: selected || 'None selected',
+      feedback: msg || 'No additional comments'
+    })
+  })
+  .then(res => {
+    if(res.ok){
+      document.getElementById('category-section').classList.remove('show');
+      document.getElementById('submit-bar').classList.remove('show');
+      setTimeout(() => { document.getElementById('ty-low').classList.add('show'); }, 200);
+    } else {
+      throw new Error('Submit failed');
+    }
+  })
+  .catch(() => {
+    btn.classList.remove('sending');
+    btn.textContent = 'Send Feedback';
+    document.getElementById('err-msg').classList.add('show');
+  });
 }
 
 function resetForm(){
