@@ -146,7 +146,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:0;min-he
           <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
         </div>
         <h2>Thank you for your feedback</h2>
-        <p>The owner will personally look into this and make it right for you.</p>
+        <p>The owner has been notified directly and will personally look into this and make it right for you.</p>
         <div class="uploaded-badge">
           <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
           Your review has been submitted ✓
@@ -174,7 +174,6 @@ const BLOCKED_CLIENTS = [
 const p             = new URLSearchParams(window.location.search);
 const BUSINESS_NAME = p.get('biz')    || '';
 const BUSINESS_TYPE = p.get('type')   || '';
-const OWNER_EMAIL   = p.get('email')  || '';
 const GOOGLE_URL    = p.get('google') || '';
 const FORM_ID       = p.get('formid') || '';
 
